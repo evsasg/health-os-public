@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Health OS OAuth Callback</title>
+</head>
+<body>
+  <h1>Health OS Authorization</h1>
+  <p id="status">Processing authorization...</p>
+  <pre id="output"></pre>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const state = params.get("state");
+    const error = params.get("error");
+
+    const status = document.getElementById("status");
+    const output = document.getElementById("output");
+
+    if (error) {
+      status.textContent = "Authorization failed.";
+      output.textContent = "Error: " + error;
+    } else if (code) {
+      status.textContent = "Authorization successful.";
+      output.textContent =
+        "Authorization code:\\n\\n" + code +
+        "\\n\\nState:\\n" + (state || "(none)") +
+        "\\n\\nCopy the authorization code and return to the setup instructions.";
+    } else {
+      status.textContent = "No authorization code was received.";
+    }
+  </script>
+</body>
+</html>
